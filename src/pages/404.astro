@@ -1,0 +1,33 @@
+---
+// System 404 page. The @astrojs/cloudflare SSR worker renders this for any route
+// that doesn't match a built page, so unknown URLs get a clean BRANDED 404 (real
+// 404 status) instead of Astro's bare default 404. NOTE: this does NOT fix a 502
+// — the router worker's `kleap-dispatch-error` 502 only fires when the app worker
+// CRASHES (HTTP 500); an unknown route already returns 404, this just makes it
+// pretty. Seeded on every build (astro-build-runner ASTRO_SEED_EXTRA_FILES); an
+// app that ships its own src/pages/404.astro wins.
+// robots:noindex so the not-found page never gets indexed.
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="Page not found"
+  description="Sorry, the page you were looking for doesn't exist or has moved."
+  noindex
+>
+  <main
+    class="flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center"
+  >
+    <p class="text-6xl font-bold tracking-tight text-foreground/80">404</p>
+    <h1 class="text-2xl font-semibold text-foreground">Page not found</h1>
+    <p class="max-w-md text-foreground/60">
+      The page you were looking for doesn't exist or may have moved.
+    </p>
+    <a
+      href="/"
+      class="rounded-lg bg-foreground px-6 py-3 font-medium text-background transition-opacity hover:opacity-90"
+    >
+      Back to home
+    </a>
+  </main>
+</Base>
